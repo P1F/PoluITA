@@ -1,0 +1,28 @@
+{% extends "registros/layout.html" %}
+
+{% block body %}
+    <h2>Avaliações de {{ empresa.name }}</h2>
+    <h2>Média: {{ media }}</h2>
+    <div>
+        <table id="customers">
+            <tr>
+            <th>Usuários</th>
+            <th>Nota</th>
+            <th>Comentários</th>
+            </tr>
+
+            {% for avaliacao in avaliacoes %}
+            <tr>
+                <td>{{ avaliacao.username }}</td>
+                <td>{{ avaliacao.grade }}</td>
+                <td>{{ avaliacao.comment }}</td>
+            </tr>
+            {% empty %}
+                <td>Nenhuma avaliação realizada</td>
+                <td></td>
+                <td></td>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

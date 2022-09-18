@@ -1,0 +1,21 @@
+{% extends "registros/layout.html" %}
+
+{% block body %}
+    <h1>Minhas avaliações</h1>
+    <table id="customers">
+        <tr>
+          <th>Empresa</th>
+          <th>Nota</th>
+          <th>Comentário</th>
+        </tr>
+
+        {% for avaliacao in avaliacoes %}
+        <tr>
+            <td>{{ avaliacao.empresaname }}</td>
+            <td>{{ avaliacao.grade }}</td>
+            <td>{{ avaliacao.comment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

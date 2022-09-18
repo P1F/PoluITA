@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    {% block head %}{% endblock %}
+
+    <body>
+        <div id='header'>
+            <div id='logo' class='headerelem'>PoluITA</div>
+            <a href=''><img src = "{% static 'lupa.png' %}" style='height:30px'></a>
+            <div id='entrar' class='headerelem hide'>Entrar <i class="fa fa-sign-in" aria-hidden="true"></i></div>
+            <div id='cadastrar' class='headerelem hide'>Registrar <i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+            <div id='user-menu' class='headerelem hide'> 
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </div>
+
+            <div id='menu-container'>
+                    <div class='title menu-head' name='session-user'>{% if request.session.username %}{{ request.session.username }}{% endif %}</div>
+                    <a href='registros/minhas-avaliacoes' style='text-decoration: none; color: #ffffff;'><div class='title menu-option' id='menu-minhas-avaliacoes'>Minhas Avaliações</div></a>
+                    <div class='title menu-option' id='menu-sair'>Sair</div>
+            </div>
+
+            <div id='login-container'>
+                <i class="fa fa-caret-up" aria-hidden="true" style="position: absolute;font-size: 17px;"></i>
+                <form id='login-box'>
+
+                    <div class='title'>Usuário:</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='text' name='user-login'>
+                    </div>
+                    <div class='errormsg' id='errouser-login'></div>
+
+                    <div class='title'>Senha:</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='password' name='senha-login'>
+                    </div>
+                    <div class='errormsg' id='errosenha-login'></div>
+
+                    <div class='send'>
+                        <div class='title sendbtn' id='send-login'>
+                            Entrar 
+                            <i class="fa fa-circle-o-notch rotate" id ='rotatelogin' aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div id='register-container'>
+                <i class="fa fa-caret-up" aria-hidden="true" style="position: absolute;font-size: 17px;right:0"></i>
+                <form id='register-box'>
+                    <div class='title'>Nome</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='text' name='nome'>
+                    </div>
+                    <div class='errormsg' id='erronome'></div>
+
+                    <div class='title'>Email:</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='text' name='email'>
+                    </div>
+                    <div class='errormsg' id='erroemail'></div>
+
+                    <div class='title'>Usuário:</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='text' name='user-register'>
+                    </div>
+                    <div class='errormsg' id='errouser-register'></div>
+
+                    <div class='title'>Senha:</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='password' name='senha-register'>
+                    </div>
+                    <div class='errormsg' id='errosenha-register'></div>
+
+                    <div class='title'>Repetir senha:</div>
+                    <div class='div-input'>
+                        <input class='text-input' type='password' name='repetirsenha'>
+                    </div>
+                    <div class='errormsg' id='errorepetirsenha'></div>
+
+                    <div class='send'>
+                        <div class='title sendbtn' id='send-register'>
+                            Registrar 
+                            <i class="fa fa-circle-o-notch rotate" id ='rotateregister' aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div id='corpo'>
+            {% block body %}{% endblock %}
+        </div>
+
+        <div id="myModal" class="modal2" onclick='hideModal(event)'>
+            <div class="modal2-content">
+                <div class="modal2-header">
+                    <span class="close" onclick='hideModal()'>&times;</span>
+                    <span class="tipo_de_letra2">POLUITA</span>
+                </div>
+                <div class="modal2-body">
+                    <form id='form-avaliacao'>
+                        <input class='hide' id='id-empresa' value='' name='id-empresa'></input>
+
+                        <div class='title'>Nota:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='nota' step=1 min=0 max =10>
+                        </div>
+                        <div class='errormsg' name='erronota'></div>
+
+                        <div class='title'>Comentários:</div>
+                            <textarea class='avaliar-input' name='comentarios'></textarea>
+                        </div>
+                        <div class='errormsg' name='errocomentario'></div>
+
+                        <div class="btn-wrapper" id='send-avaliacao'>
+                            <a class="myButton">Avaliar</a>
+                        </div>
+                        <div class='errormsg' name='errologin' style="margin-bottom: 10px;"></div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="loader-wrapper">
+            <span class="loader"><span class="loader-inner"></span></span>
+        </div>
+
+        <script src = "{% static 'mapbox.js' %}"></script>
+        <script src = "{% static 'index.js' %}"></script>
+        {% if request.session.username %}
+            <script>
+                document.getElementById('user-menu').style.display = 'block'
+            </script>
+        {% else %}
+            <script>
+                document.getElementById('entrar').style.display = 'block'
+                document.getElementById('cadastrar').style.display = 'block'
+            </script>
+        {% endif %}
+    </body>
+</html>
