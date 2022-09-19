@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 class Empresas(models.Model):
@@ -6,8 +7,15 @@ class Empresas(models.Model):
     address = models.CharField(max_length=200)
     name = models.CharField(max_length=101)
     grade = models.IntegerField()
+    pm25 = models.FloatField(default='0.00')
+    co2 = models.FloatField(default='0.00')
+    voc = models.FloatField(default='0.00')
+    o3 = models.FloatField(default='0.00')
+    humidity = models.FloatField(default='0.00')
+    temperature = models.FloatField(default='0.00')
     longitude = models.FloatField(default='0.00')
     latitude = models.FloatField(default='0.00')
+    last_updated = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return f"{self.name} {self.latitude} {self.longitude}"
@@ -32,5 +40,14 @@ class Avaliações(models.Model):
     empresa_id = models.IntegerField(default=0)
     comment = models.CharField(max_length=300, default='Não deixou comentários sobre o estabelecimento.')
     grade = models.IntegerField()
+    pm25 = models.FloatField(default='0.00')
+    co2 = models.FloatField(default='0.00')
+    voc = models.FloatField(default='0.00')
+    o3 = models.FloatField(default='0.00')
+    humidity = models.FloatField(default='0.00')
+    temperature = models.FloatField(default='0.00')
     def __str__(self):
-        return f"USUÁRIO: {self.username} PARA EMPRESA: {self.empresaname} NOTA: {self.grade} COMENTÁRIO: {self.comment}"
+        return f"USUÁRIO: {self.username} PARA EMPRESA: {self.empresaname} NOTA: {self.grade} \
+            COMENTÁRIO: {self.comment} PM2.5: {self.pm25} CO2: {self.co2} \
+            VOC: {self.voc} O3: {self.o3} \
+            UMIDADE: {self.humidity} TEMPERATURA: {self.temperature}"

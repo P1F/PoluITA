@@ -17,7 +17,7 @@
 
             <div id='menu-container'>
                     <div class='title menu-head' name='session-user'>{% if request.session.username %}{{ request.session.username }}{% endif %}</div>
-                    <a href='registros/minhas-avaliacoes' style='text-decoration: none; color: #ffffff;'><div class='title menu-option' id='menu-minhas-avaliacoes'>Minhas Avaliações</div></a>
+                    <a href='registros/minhas-avaliacoes' style='text-decoration: none; color: #ffffff;'><div class='title menu-option' id='menu-minhas-avaliacoes'>Minhas Contribuições</div></a>
                     <div class='title menu-option' id='menu-sair'>Sair</div>
             </div>
 
@@ -110,6 +110,42 @@
                             <input class='avaliar-input' type='number' name='nota' step=1 min=0 max =10>
                         </div>
                         <div class='errormsg' name='erronota'></div>
+
+                        <div class='title'>PM2.5:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='pm25'>
+                        </div>
+                        <div class='errormsg' name='erropm25'></div>
+
+                        <div class='title'>CO2:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='co2'>
+                        </div>
+                        <div class='errormsg' name='erroco2'></div>
+
+                        <div class='title'>VOC:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='voc'>
+                        </div>
+                        <div class='errormsg' name='errovoc'></div>
+
+                        <div class='title'>O3:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='o3'>
+                        </div>
+                        <div class='errormsg' name='erroo3'></div>
+
+                        <div class='title'>Umidade:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='umidade'>
+                        </div>
+                        <div class='errormsg' name='erroumidade'></div>
+
+                        <div class='title'>Temperatura:</div>
+                        <div class='div-input'>
+                            <input class='avaliar-input' type='number' name='temperatura'>
+                        </div>
+                        <div class='errormsg' name='errotemperatura'></div>
 
                         <div class='title'>Comentários:</div>
                             <textarea class='avaliar-input' name='comentarios'></textarea>

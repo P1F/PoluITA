@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.db.models import Avg
 import re
 import json
+from datetime import datetime, timezone
 
 from .models import Empresas, Usuários, Avaliações
 # Create your views here.
@@ -131,6 +132,12 @@ def generate_avaliacao(request):
     data = dict(request.POST)
     comment = data['comentarios'][0]
     grade = data['nota'][0]
+    pm25 = data['pm25'][0]
+    co2 = data['co2'][0]
+    voc = data['voc'][0]
+    o3 = data['o3'][0]
+    humidity = data['umidade'][0]
+    temperature = data['temperatura'][0]
     empresa_id = data['id-empresa'][0]
     erros = {}
 
@@ -146,6 +153,31 @@ def generate_avaliacao(request):
         erros['nota'] = 'Nota deve estar entre 0 e 10'
         erros['ok'] = False
         return JsonResponse(erros)
+
+    if len(pm25) <= 0:
+        erros['pm25'] = 'PM2.5 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+    
+    if len(co2) <= 0:
+        erros['co2'] = 'CO2 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(voc) <= 0:
+        erros['voc'] = 'VOC deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(o3) <= 0:
+        erros['o3'] = 'O3 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(humidity) <= 0:
+        erros['umidade'] = 'Umidade deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
         
     if len(comment) > 300:
         erros['comentario'] = 'Máximo de 300 caractéres'
@@ -157,9 +189,17 @@ def generate_avaliacao(request):
             user = request.session['username']
             userid = list(Usuários.objects.filter(user=user).values('id'))[0]['id']
             empresa = Empresas.objects.get(id=empresa_id)
-            Avaliações(comment=comment, grade=grade, empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
+            Avaliações(comment=comment, grade=grade, pm25=pm25, co2=co2, voc=voc, o3=o3, humidity=humidity, temperature=temperature,
+                empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
             media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
             empresa.grade = round(media['grade__avg'])
+            empresa.pm25 = pm25
+            empresa.co2 = co2
+            empresa.voc = voc
+            empresa.o3 = o3
+            empresa.humidity = humidity
+            empresa.temperature = temperature
+            empresa.last_updated = datetime.now(timezone.utc)
             empresa.save()
             erros['ok'] = True
         else:

@@ -3,11 +3,19 @@
 {% block body %}
     <h2>Avaliações de {{ empresa.name }}</h2>
     <h2>Média: {{ media }}</h2>
+    <h2>Última atualização: {{ empresa.last_updated }} UTC</h2>
+    <p>PM2.5: {{ empresa.pm25 }}, CO2: {{ empresa.co2 }}, VOC: {{ empresa.voc }}, O3: {{ empresa.o3 }}, Umidade: {{ empresa.humidity }}, Temperatura: {{ empresa.temperature }}</p>
     <div>
         <table id="customers">
             <tr>
             <th>Usuários</th>
             <th>Nota</th>
+            <th>PM2.5</th>
+            <th>CO2</th>
+            <th>VOC</th>
+            <th>O3</th>
+            <th>Umidade</th>
+            <th>Temperatura</th>
             <th>Comentários</th>
             </tr>
 
@@ -15,6 +23,12 @@
             <tr>
                 <td>{{ avaliacao.username }}</td>
                 <td>{{ avaliacao.grade }}</td>
+                <td>{{ avaliacao.pm25 }}</td>
+                <td>{{ avaliacao.co2 }}</td>
+                <td>{{ avaliacao.voc }}</td>
+                <td>{{ avaliacao.o3 }}</td>
+                <td>{{ avaliacao.humidity }}</td>
+                <td>{{ avaliacao.temperature }}</td>
                 <td>{{ avaliacao.comment }}</td>
             </tr>
             {% empty %}
