@@ -86,7 +86,7 @@ window.onload = function(){
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
                 .setHTML(`
-                <h2 id="mapa-endereco">${marker.properties.title} (${marker.geometry.coordinates[0]}, ${marker.geometry.coordinates[1]})</h3>
+                <h2 id="mapa-nome">${marker.properties.title}</h3>
                 <h2 id="mapa-endereco">${marker.properties.description}</h3>
                 <h3 id="mapa-endereco">Qualidade do Ar: ${marker.properties.nota}</h3>
                 <hr class="solid">
@@ -104,7 +104,7 @@ window.onload = function(){
                 <br>
                 <h5 id="popup-item">Última Atualização: </h5><h6>${marker.properties.last_updated}</h6>
                 <br>
-                <div long =${marker.geometry.coordinates[0]} lat =${marker.geometry.coordinates[1]}>
+                <div long=${marker.geometry.coordinates[0]} lat=${marker.geometry.coordinates[1]}>
                 </div>
                 `))
                 .addTo(map);
@@ -130,8 +130,8 @@ window.onload = function(){
         }else{
             await new Promise(r=>setTimeout(r, 1000))
             var pop = document.getElementsByClassName('mapboxgl-popup-content')[0]
-            data['lat'] = pop.children[3].attributes[1].value
-            data['long'] = pop.children[3].attributes[0].value
+            data['lat'] = pop.children[pop.children.length - 1].attributes[1].value
+            data['long'] = pop.children[pop.children.length - 1].attributes[0].value
             data['nome'] = pop.children[1].textContent
             data['endereco'] = pop.children[2].textContent
         }
