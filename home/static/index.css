@@ -10,7 +10,7 @@ div{
 #header{
     width: 100%;
     height: 60px;
-    background-color: #2a6086;
+    background-color: #2c4c3b;
     display: flex;
     align-items: center;
     position: relative;
@@ -46,12 +46,12 @@ div{
 }
 
 #entrar:hover, #cadastrar:hover{
-    background-color: #2194b1;
+    background-color: #306844;
     font-size: 18px;
 }
 
 #corpo{
-    background-image: linear-gradient(#bef4f4, #ffffff);
+    background-image: linear-gradient(#306844, #ffffff);
     min-height: calc(100vh - 60px);
     justify-content: center;
     display: flex;
@@ -59,7 +59,7 @@ div{
 }
 
 #corpo-registros{
-    background-image: linear-gradient(#bef4f4, #ffffff);
+    background-image: linear-gradient(#306844, #ffffff);
     min-height: calc(100vh - 60px);
     padding-top: 60px;
 }
@@ -67,7 +67,7 @@ div{
 #container{
     width: 90%;
     background-color: #ffffff;
-    border: .2px solid #2194b1;
+    border: .2px solid #306844;
 }
 
 #menu-container{
@@ -77,10 +77,10 @@ div{
     right: 0;
     margin-right: 10px;
     top: 60px;
-    background-color: #2a6086;
+    background-color: #2c4c3b;
     color: #ffffff;
     border-radius: 5px;
-    box-shadow: 2px 1px #b6ebf8;
+    box-shadow: 2px 1px #b6f8dc;
     z-index: 3;
 }
 
@@ -89,7 +89,7 @@ div{
 }
 
 .menu-option{
-    background-color: #2194b1;
+    background-color: #306844;
     cursor: pointer;
 }
 
@@ -110,8 +110,8 @@ div{
     border: 1px solid #000000;
     margin-top: 12px;
     border-radius: 0 5px;
-    box-shadow: 2px 1px #2194b1;
-    background-color: #2a6086;
+    box-shadow: 2px 1px #306844;
+    background-color: #2c4c3b;
     color: #ffffff;
 }
 
@@ -119,8 +119,8 @@ div{
     border: 1px solid #000000;
     margin-top: 12px;
     border-radius: 5px 0;
-    box-shadow: 2px 1px #2194b1;
-    background-color: #2a6086;
+    box-shadow: 2px 1px #306844;
+    background-color: #2c4c3b;
     color: #ffffff;
 }
 
@@ -164,7 +164,7 @@ div{
 
 .sendbtn{
     border: 1px solid;
-    background-color: #2194b1;
+    background-color: #306844;
     margin: 15px;
     cursor: pointer;
 }
@@ -293,7 +293,7 @@ div{
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #2194b1;
+    background-color: #306844;
     color: white;
   }
 
@@ -353,7 +353,7 @@ div{
   .modal2-header {
     padding: 2px 16px;
     font-size: 18px;
-    background: #2a6086;
+    background: #2c4c3b;
     text-align: center;  
     color: #ffffff;
   }
@@ -372,8 +372,8 @@ div{
   }
 
   .myButton {
-    box-shadow: 0px 10px 14px -7px #275b73;
-    background:linear-gradient(to bottom, #04b4e0 5%, #5294b3 100%);
+    box-shadow: 0px 10px 14px -7px #1e453e;
+    background:linear-gradient(to bottom, #2c4c3b 5%, #306844 100%);
     background-color:#04b4e0;
     border-radius:4px;
     border:1px solid #386ab5;
@@ -385,11 +385,11 @@ div{
     font-weight:bold;
     padding:8px 12px;
     text-decoration:none;
-    text-shadow:0px 1px 0px #0b99bd;
+    text-shadow:0px 1px 0px #306844;
 }
 .myButton:hover {
-    background:linear-gradient(to bottom, #5294b3 5%, #04b4e0 100%);
-    background-color:#5294b3;
+    background:linear-gradient(to bottom, #2c4c3b 5%, #306844 100%);
+    background-color:#306844;
 }
 .myButton:active {
     position:relative;
@@ -422,7 +422,7 @@ a.mapboxgl-ctrl-logo{
 }
 
 .marker {
-  background-image: url('mapbox-icon.png');
+  background-image: url('mapbox-icon2.png');
   background-size: cover;
   width: 50px;
   height: 50px;
@@ -432,9 +432,43 @@ a.mapboxgl-ctrl-logo{
 
 .mapboxgl-popup {
   max-width: 200px;
+  border-radius: 25px !important; 
 }
 
 .mapboxgl-popup-content {
-  text-align: center;
+  background-color: #FFF;
+  opacity: 85%;
+  box-shadow: #000000;
+  border-radius: 5px !important; 
   font-family: 'Open Sans', sans-serif;
 }
+
+h5 {
+  font-size: 0.625rem;
+  margin: 0 0 0;
+  font-weight: bolder !important;
+  color: #182c25;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline;
+}
+
+h6{
+  font-size: 0.625rem;
+  margin: 0 0 0;
+  font-weight: bold;
+  color: var(--body-quiet-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline;
+}
+
+h2 {
+  color: #182c25;
+  font-weight: bold;
+}
+
+h3 {
+  color: #306844;
+}
+

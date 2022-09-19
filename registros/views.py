@@ -114,7 +114,7 @@ def obter_empresas(request):
         ponto = {}
         ponto['type'] = 'feature'
         ponto['geometry'] = {'type':'Point', 'coordinates':[empresa.longitude, empresa.latitude]}
-        ponto['properties'] = {'title':empresa.name, 'description':empresa.address}
+        ponto['properties'] = {'title':empresa.name, 'last_updated': empresa.last_updated.strftime('%Y-%m-%d %H:%M:%S %Z'), 'nota':empresa.grade, 'description':empresa.address, 'pm': empresa.pm25, 'co2': empresa.co2, 'o3': empresa.o3, 'voc': empresa.voc, 'humidade': empresa.humidity, 'temperatura': empresa.temperature}
         pontos.append(ponto)
     return JsonResponse({'data':pontos})
 

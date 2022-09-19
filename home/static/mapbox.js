@@ -85,7 +85,27 @@ window.onload = function(){
                 new mapboxgl.Marker(el)
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-                .setHTML('<h3 id="mapa-nome">' + marker.properties.title + '</h3><h4 id="mapa-endereco">'+marker.properties.description+'</h4><div long ='+marker.geometry.coordinates[0] +' lat ='+marker.geometry.coordinates[1] +'></div>'))
+                .setHTML(`
+                <h2 id="mapa-endereco">${marker.properties.description}</h3>
+                <h3 id="mapa-endereco">Qualidade do Ar: ${marker.properties.nota}</h3>
+                <hr class="solid">
+                <h5 id="popup-item">PM2.5: </h5> <h6>${marker.properties.pm}</h6>
+                <br>
+                <h5 id="popup-item">CO2: </h5><h6>${marker.properties.co2}</h6>
+                <br>
+                <h5 id="popup-item">VOC: </h5><h6>${marker.properties.voc}</h6>
+                <br>
+                <h5 id="popup-item">O3: </h5><h6>${marker.properties.o3}</h6>
+                <br>
+                <h5 id="popup-item">Humidade: </h5><h6>${marker.properties.humidade}</h6>
+                <br>
+                <h5 id="popup-item">Temperatura: </h5><h6>${marker.properties.temperatura}</h6>
+                <br>
+                <h5 id="popup-item">Última Atualização: </h5><h6>${marker.properties.last_updated}</h6>
+                <br>
+                <div long =${marker.geometry.coordinates[0]} lat =${marker.geometry.coordinates[1]}>
+                </div>
+                `))
                 .addTo(map);
             });
         }
