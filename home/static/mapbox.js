@@ -86,6 +86,7 @@ window.onload = function(){
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
                 .setHTML(`
+                <h2 id="mapa-endereco">${marker.properties.title} (${marker.geometry.coordinates[0]}, ${marker.geometry.coordinates[1]})</h3>
                 <h2 id="mapa-endereco">${marker.properties.description}</h3>
                 <h3 id="mapa-endereco">Qualidade do Ar: ${marker.properties.nota}</h3>
                 <hr class="solid">
