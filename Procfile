@@ -1,1 +1,1 @@
-web: gunicorn coronaaqui.wsgi
+web: gunicorn poluita.wsgi
