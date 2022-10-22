@@ -24,8 +24,11 @@ SECRET_KEY = 'nj+!h50n1sqjo2$@x2%p+2aiu2u(=4hp12c=)rc^a%8s5br#!l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+    'poluita.herokuapp.com', # your herokuapp url
+    '127.0.0.1'
+]
 
 # Application definition
 
