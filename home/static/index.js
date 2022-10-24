@@ -123,9 +123,9 @@ document.getElementById('send-avaliacao').addEventListener('click', function(){
     showLoader()
     document.getElementsByName('erronota')[0].textContent = ''
     document.getElementsByName('erropm25')[0].textContent = ''
-    document.getElementsByName('erroco2')[0].textContent = ''
-    document.getElementsByName('errovoc')[0].textContent = ''
-    document.getElementsByName('erroo3')[0].textContent = ''
+    document.getElementsByName('erroco')[0].textContent = ''
+    document.getElementsByName('errolpg')[0].textContent = ''
+    document.getElementsByName('erroch4')[0].textContent = ''
     document.getElementsByName('erroumidade')[0].textContent = ''
     document.getElementsByName('errotemperatura')[0].textContent = ''
     document.getElementsByName('errocomentario')[0].textContent = ''

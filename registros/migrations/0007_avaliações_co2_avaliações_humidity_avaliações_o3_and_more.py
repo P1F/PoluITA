@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="avaliações",
-            name="co2",
+            name="co",
             field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
-            model_name="avaliações", name="o3", field=models.FloatField(default="0.00"),
+            model_name="avaliações", name="ch4", field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
             model_name="avaliações",
@@ -36,11 +36,11 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name="avaliações",
-            name="voc",
+            name="lpg",
             field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
-            model_name="empresas", name="co2", field=models.FloatField(default="0.00"),
+            model_name="empresas", name="co", field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
             model_name="empresas",
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
             field=models.DateTimeField(blank=True, default=datetime.datetime.now),
         ),
         migrations.AddField(
-            model_name="empresas", name="o3", field=models.FloatField(default="0.00"),
+            model_name="empresas", name="ch4", field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
             model_name="empresas", name="pm25", field=models.FloatField(default="0.00"),
@@ -64,6 +64,6 @@ class Migration(migrations.Migration):
             field=models.FloatField(default="0.00"),
         ),
         migrations.AddField(
-            model_name="empresas", name="voc", field=models.FloatField(default="0.00"),
+            model_name="empresas", name="lpg", field=models.FloatField(default="0.00"),
         ),
     ]

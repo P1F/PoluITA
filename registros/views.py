@@ -114,7 +114,7 @@ def obter_empresas(request):
         ponto = {}
         ponto['type'] = 'feature'
         ponto['geometry'] = {'type':'Point', 'coordinates':[empresa.longitude, empresa.latitude]}
-        ponto['properties'] = {'title':empresa.name, 'last_updated': empresa.last_updated.strftime('%Y-%m-%d %H:%M:%S %Z'), 'nota':empresa.grade, 'description':empresa.address, 'pm': empresa.pm25, 'co2': empresa.co2, 'o3': empresa.o3, 'voc': empresa.voc, 'humidade': empresa.humidity, 'temperatura': empresa.temperature}
+        ponto['properties'] = {'title':empresa.name, 'last_updated': empresa.last_updated.strftime('%Y-%m-%d %H:%M:%S %Z'), 'nota':empresa.grade, 'description':empresa.address, 'pm': empresa.pm25, 'co': empresa.co, 'ch4': empresa.ch4, 'lpg': empresa.lpg, 'humidade': empresa.humidity, 'temperatura': empresa.temperature}
         pontos.append(ponto)
     return JsonResponse({'data':pontos})
 
@@ -133,9 +133,9 @@ def generate_avaliacao(request):
     comment = data['comentarios'][0]
     grade = data['nota'][0]
     pm25 = data['pm25'][0]
-    co2 = data['co2'][0]
-    voc = data['voc'][0]
-    o3 = data['o3'][0]
+    co = data['co'][0]
+    lpg = data['lpg'][0]
+    ch4 = data['ch4'][0]
     humidity = data['umidade'][0]
     temperature = data['temperatura'][0]
     empresa_id = data['id-empresa'][0]
@@ -159,18 +159,18 @@ def generate_avaliacao(request):
         erros['ok'] = False
         return JsonResponse(erros)
     
-    if len(co2) <= 0:
-        erros['co2'] = 'CO2 deve ser maior que 0'
+    if len(co) <= 0:
+        erros['co'] = 'CO deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
 
-    if len(voc) <= 0:
-        erros['voc'] = 'VOC deve ser maior que 0'
+    if len(lpg) <= 0:
+        erros['lpg'] = 'LPG deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
 
-    if len(o3) <= 0:
-        erros['o3'] = 'O3 deve ser maior que 0'
+    if len(ch4) <= 0:
+        erros['ch4'] = 'CH4 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
 
@@ -189,14 +189,14 @@ def generate_avaliacao(request):
             user = request.session['username']
             userid = list(Usuários.objects.filter(user=user).values('id'))[0]['id']
             empresa = Empresas.objects.get(id=empresa_id)
-            Avaliações(comment=comment, grade=grade, pm25=pm25, co2=co2, voc=voc, o3=o3, humidity=humidity, temperature=temperature,
+            Avaliações(comment=comment, grade=grade, pm25=pm25, co=co, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
                 empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
             media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
             empresa.grade = round(media['grade__avg'])
             empresa.pm25 = pm25
-            empresa.co2 = co2
-            empresa.voc = voc
-            empresa.o3 = o3
+            empresa.co = co
+            empresa.lpg = lpg
+            empresa.ch4 = ch4
             empresa.humidity = humidity
             empresa.temperature = temperature
             empresa.last_updated = datetime.now(timezone.utc)

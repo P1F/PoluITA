@@ -8,9 +8,9 @@ class Empresas(models.Model):
     name = models.CharField(max_length=101)
     grade = models.IntegerField()
     pm25 = models.FloatField(default='0.00')
-    co2 = models.FloatField(default='0.00')
-    voc = models.FloatField(default='0.00')
-    o3 = models.FloatField(default='0.00')
+    co = models.FloatField(default='0.00')
+    lpg = models.FloatField(default='0.00')
+    ch4 = models.FloatField(default='0.00')
     humidity = models.FloatField(default='0.00')
     temperature = models.FloatField(default='0.00')
     longitude = models.FloatField(default='0.00')
@@ -41,13 +41,13 @@ class Avaliações(models.Model):
     comment = models.CharField(max_length=300, default='Não deixou comentários sobre o estabelecimento.')
     grade = models.IntegerField()
     pm25 = models.FloatField(default='0.00')
-    co2 = models.FloatField(default='0.00')
-    voc = models.FloatField(default='0.00')
-    o3 = models.FloatField(default='0.00')
+    co = models.FloatField(default='0.00')
+    lpg = models.FloatField(default='0.00')
+    ch4 = models.FloatField(default='0.00')
     humidity = models.FloatField(default='0.00')
     temperature = models.FloatField(default='0.00')
     def __str__(self):
         return f"USUÁRIO: {self.username} PARA EMPRESA: {self.empresaname} NOTA: {self.grade} \
-            COMENTÁRIO: {self.comment} PM2.5: {self.pm25} CO2: {self.co2} \
-            VOC: {self.voc} O3: {self.o3} \
+            COMENTÁRIO: {self.comment} PM2.5: {self.pm25} CO: {self.co} \
+            LPG: {self.lpg} CH4: {self.ch4} \
             UMIDADE: {self.humidity} TEMPERATURA: {self.temperature}"
