@@ -13,5 +13,6 @@ urlpatterns = [
     path("<int:empresa_id>", views.avaliacao, name="avaliacao"),
     path("obter-empresas", views.obter_empresas),
     path("buscar-empresa", views.buscar_empresa),
-    path("generate-avaliacao", views.generate_avaliacao)
+    path("generate-avaliacao", views.generate_avaliacao),
+    path("inserir-avaliacao", views.insert_rating)
 ]

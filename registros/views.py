@@ -209,3 +209,97 @@ def generate_avaliacao(request):
         
     else:
         return JsonResponse({'ok':False})
+
+
+def insert_rating(request):
+    data = dict(request.POST)
+    comment = data['comentarios'][0]
+    grade = data['nota'][0]
+    pm25 = data['pm25'][0]
+    co = data['co'][0]
+    lpg = data['lpg'][0]
+    ch4 = data['ch4'][0]
+    humidity = data['umidade'][0]
+    temperature = data['temperatura'][0]
+    empresa_id = data['id-empresa'][0]
+      # TODO: Add support to get company by address
+      # lat = round(float(data['lat'][0]), 4)
+      # longi = round(float(data['long'][0]), 4)
+      # empresa = Empresas.objects.filter(longitude = longi, latitude = lat)
+      # if empresa.count() == 0:
+      #     Empresas(address=data['endereco'], name = data['nome'], grade = -1, longitude = longi, latitude = lat).save()
+      #     empresa = Empresas.objects.filter(longitude = longi, latitude = lat)
+      #     empresa_id = empresa.id
+  
+    username = data['username'][0]
+    erros = {}
+
+    if username != "admin":
+        erros['username'] = 'Usuário sem permissão'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(grade) == 0:
+        erros['nota'] = 'Inserir nota'
+        erros['ok'] = False
+        return JsonResponse(erros)
+    elif int(grade) > 10:
+        erros['nota'] = 'Nota deve estar entre 0 e 10'
+        erros['ok'] = False
+        return JsonResponse(erros)
+    elif int(grade) < 0:
+        erros['nota'] = 'Nota deve estar entre 0 e 10'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(pm25) <= 0:
+        erros['pm25'] = 'PM2.5 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+    
+    if len(co) <= 0:
+        erros['co'] = 'CO deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(lpg) <= 0:
+        erros['lpg'] = 'LPG deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(ch4) <= 0:
+        erros['ch4'] = 'CH4 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(humidity) <= 0:
+        erros['umidade'] = 'Umidade deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+        
+    if len(comment) > 300:
+        erros['comentario'] = 'Máximo de 300 caractéres'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if request.method == 'POST':
+        user = username
+        userid = list(Usuários.objects.filter(user=user).values('id'))[0]['id']
+        empresa = Empresas.objects.get(id=empresa_id)
+        Avaliações(comment=comment, grade=grade, pm25=pm25, co=co, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
+            empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
+        media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
+        empresa.grade = round(media['grade__avg'])
+        empresa.pm25 = pm25
+        empresa.co = co
+        empresa.lpg = lpg
+        empresa.ch4 = ch4
+        empresa.humidity = humidity
+        empresa.temperature = temperature
+        empresa.last_updated = datetime.now(timezone.utc)
+        empresa.save()
+        erros['ok'] = True
+        return JsonResponse(erros)
+        
+    else:
+        return JsonResponse({'ok':False})
