@@ -92,7 +92,11 @@ window.onload = function(){
                 <hr class="solid">
                 <h5 id="popup-item">PM2.5: </h5> <h6>${marker.properties.pm}</h6>
                 <br>
+                <h5 id="popup-item">PM10: </h5> <h6>${marker.properties.pm10}</h6>
+                <br>
                 <h5 id="popup-item">CO: </h5><h6>${marker.properties.co}</h6>
+                <br>
+                <h5 id="popup-item">CO2: </h5><h6>${marker.properties.co2}</h6>
                 <br>
                 <h5 id="popup-item">LPG: </h5><h6>${marker.properties.lpg}</h6>
                 <br>

@@ -9,12 +9,14 @@
             <tr>
             <th>Usuários</th>
             <th>Nota</th>
-            <th>PM2.5</th>
-            <th>co</th>
-            <th>LPG</th>
-            <th>CH4</th>
-            <th>Umidade</th>
-            <th>Temperatura</th>
+            <th>PM2.5 (pcs/L)</th>
+            <th>PM10 (pcs/L)</th>
+            <th>CO (ppm)</th>
+            <th>CO2 (ppm)</th>
+            <th>LPG (ppm)</th>
+            <th>CH4 (ppm)</th>
+            <th>Umidade (%)</th>
+            <th>Temperatura (°C)</th>
             <th>Comentários</th>
             </tr>
 
@@ -23,7 +25,9 @@
                 <td>{{ avaliacao.username }}</td>
                 <td>{{ avaliacao.grade }}</td>
                 <td>{{ avaliacao.pm25 }}</td>
+                <td>{{ avaliacao.pm10 }}</td>
                 <td>{{ avaliacao.co }}</td>
+                <td>{{ avaliacao.co2 }}</td>
                 <td>{{ avaliacao.lpg }}</td>
                 <td>{{ avaliacao.ch4 }}</td>
                 <td>{{ avaliacao.humidity }}</td>

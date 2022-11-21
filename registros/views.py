@@ -114,7 +114,7 @@ def obter_empresas(request):
         ponto = {}
         ponto['type'] = 'feature'
         ponto['geometry'] = {'type':'Point', 'coordinates':[empresa.longitude, empresa.latitude]}
-        ponto['properties'] = {'title':empresa.name, 'last_updated': empresa.last_updated.strftime('%Y-%m-%d %H:%M:%S %Z'), 'nota':empresa.grade, 'description':empresa.address, 'pm': empresa.pm25, 'co': empresa.co, 'ch4': empresa.ch4, 'lpg': empresa.lpg, 'humidade': empresa.humidity, 'temperatura': empresa.temperature}
+        ponto['properties'] = {'title':empresa.name, 'last_updated': empresa.last_updated.strftime('%Y-%m-%d %H:%M:%S %Z'), 'nota':empresa.grade, 'description':empresa.address, 'pm25': empresa.pm25, 'pm10': empresa.pm10, 'co': empresa.co, 'co2': empresa.co2, 'ch4': empresa.ch4, 'lpg': empresa.lpg, 'humidade': empresa.humidity, 'temperatura': empresa.temperature}
         pontos.append(ponto)
     return JsonResponse({'data':pontos})
 
@@ -133,7 +133,9 @@ def generate_avaliacao(request):
     comment = data['comentarios'][0]
     grade = data['nota'][0]
     pm25 = data['pm25'][0]
+    pm10 = data['pm10'][0]
     co = data['co'][0]
+    co2 = data['co2'][0]
     lpg = data['lpg'][0]
     ch4 = data['ch4'][0]
     humidity = data['umidade'][0]
@@ -158,9 +160,19 @@ def generate_avaliacao(request):
         erros['pm25'] = 'PM2.5 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
+
+    if len(pm10) <= 0:
+        erros['pm10'] = 'PM10 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
     
     if len(co) <= 0:
         erros['co'] = 'CO deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(co2) <= 0:
+        erros['co2'] = 'CO2 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
 
@@ -189,12 +201,14 @@ def generate_avaliacao(request):
             user = request.session['username']
             userid = list(Usuários.objects.filter(user=user).values('id'))[0]['id']
             empresa = Empresas.objects.get(id=empresa_id)
-            Avaliações(comment=comment, grade=grade, pm25=pm25, co=co, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
+            Avaliações(comment=comment, grade=grade, pm25=pm25, pm10=pm10, co=co, co2=co2, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
                 empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
             media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
             empresa.grade = round(media['grade__avg'])
             empresa.pm25 = pm25
+            empresa.pm10 = pm10
             empresa.co = co
+            empresa.co2 = co2
             empresa.lpg = lpg
             empresa.ch4 = ch4
             empresa.humidity = humidity
@@ -216,7 +230,9 @@ def insert_rating(request):
     comment = data['comentarios'][0]
     grade = data['nota'][0]
     pm25 = data['pm25'][0]
+    pm10 = data['pm10'][0]
     co = data['co'][0]
+    co2 = data['co2'][0]
     lpg = data['lpg'][0]
     ch4 = data['ch4'][0]
     humidity = data['umidade'][0]
@@ -256,9 +272,19 @@ def insert_rating(request):
         erros['pm25'] = 'PM2.5 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
+
+    if len(pm10) <= 0:
+        erros['pm10'] = 'PM10 deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
     
     if len(co) <= 0:
         erros['co'] = 'CO deve ser maior que 0'
+        erros['ok'] = False
+        return JsonResponse(erros)
+
+    if len(co2) <= 0:
+        erros['co2'] = 'CO2 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
 
@@ -286,12 +312,14 @@ def insert_rating(request):
         user = username
         userid = list(Usuários.objects.filter(user=user).values('id'))[0]['id']
         empresa = Empresas.objects.get(id=empresa_id)
-        Avaliações(comment=comment, grade=grade, pm25=pm25, co=co, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
+        Avaliações(comment=comment, grade=grade, pm25=pm25, pm10=pm10, co=co, co2=co2, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
             empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
         media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
         empresa.grade = round(media['grade__avg'])
         empresa.pm25 = pm25
+        empresa.pm10 = pm10
         empresa.co = co
+        empresa.co2 = co2
         empresa.lpg = lpg
         empresa.ch4 = ch4
         empresa.humidity = humidity
