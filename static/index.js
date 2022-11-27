@@ -121,7 +121,6 @@ document.getElementById('send-register').addEventListener('click', function(){
 
 document.getElementById('send-avaliacao').addEventListener('click', function(){
     showLoader()
-    document.getElementsByName('erronota')[0].textContent = ''
     document.getElementsByName('errocomentario')[0].textContent = ''
     document.getElementsByName('errologin')[0].textContent = ''
 

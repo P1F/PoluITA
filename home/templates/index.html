@@ -1,73 +1,73 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block head %}
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
-    <head>
-        <title>POLUITA</title>
-        <link rel="shortcut icon" type="image/png" href="{% static 'lupa.png' %}"/>
-        <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet'/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet'/>
-        <link
-            rel="stylesheet"
-            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-            type="text/css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
-            type="text/css"
-        />
-        <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
-        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
-        <link href="{% static 'index.css' %}" rel='stylesheet'/>
-    </head>
+{% if message %}
+<div>{{ message }}</div>
+{% endif %}
 
-    <script>
-        function showLoader(){document.getElementsByClassName('loader-wrapper')[0].style.display = 'flex'}
-        function hideLoader(){document.getElementsByClassName('loader-wrapper')[0].style.display = 'none'}
-        function showModal(){document.getElementById('myModal').style.display = 'block'}
-        function hideModal(event){var modal = document.getElementById('myModal');if (!event){modal.style.display = 'none'}else{if(event.target==modal){modal.style.display = 'none'}}}
-    </script>
+<head>
+  <title>POLUITA</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'lupa.png' %}" />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+    type="text/css" />
+  <link rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
+    type="text/css" />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+  <script
+    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
+  <link href="{% static 'index.css' %}" rel='stylesheet' />
+</head>
+
+<script>
+  function showLoader() { document.getElementsByClassName('loader-wrapper')[0].style.display = 'flex' }
+  function hideLoader() { document.getElementsByClassName('loader-wrapper')[0].style.display = 'none' }
+  function showModal() { document.getElementById('myModal').style.display = 'block' }
+  function hideModal(event) { var modal = document.getElementById('myModal'); if (!event) { modal.style.display = 'none' } else { if (event.target == modal) { modal.style.display = 'none' } } }
+</script>
 {% endblock %}
 
 
 {% block body %}
-    <div id='container'>
-        <div id='left'>
-            <div id='buscar-mapa'><i class="fa fa-search"></i>Buscar:</div>
-            <div id="geocoder" class="geocoder"></div>
-        </div>
-        <div id='right'>
-            <div id='map'></div>
-            <div id='info-empresa'>
-                <div class='hide' id='info-hide-show'>
-                    <div id = 'info-nome'></div>
-                    <div id = 'info-endereço'></div>
-                    <div id = 'info-nota'>
-                            Nota:  
-                                <span class="fa fa-star estrela"></span>
-                                <span class="fa fa-star estrela"></span>
-                                <span class="fa fa-star estrela"></span>
-                                <span class="fa fa-star estrela"></span>
-                                <span class="fa fa-star estrela"></span>
-                    </div>
-                    <div style="font-size: 13px;color: red;" id='sem-avaliacao'>Sem avaliações</div>
-                    <div id = 'button'>
-                        <a class="myButton" onclick="verAvaliacoes()">Ver Avaliações</a>
-                        <a class="myButton" onclick="showModal()">Avaliar Local</a>
-                    </div>
-                </div>
-                <div style="display: flex; justify-content: center; padding: 20px;">
-                    <i class="fa fa-circle-o-notch rotate" id ='inforotate' aria-hidden="true"></i>
-                </div>
-            </div>
-        </div>
-    </div>    
-{% endblock %}
+<div id='container'>
+  <div id='left'>
+    <div id='buscar-mapa'><i class="fa fa-search"></i>Buscar:</div>
+    <div id="geocoder" class="geocoder"></div>
+  </div>
+  <div id='right'>
+    <div id='map'></div>
+    <div id='info-empresa'>
+      <div class='hide' id='info-hide-show'>
+        <div id='info-nome'></div>
+        <div id='info-endereço'></div>
+        <div id='info-nota'>
+          AQI:
+          <span class="fa fa-star estrela"></span>
+          <span class="fa fa-star estrela"></span>
+          <span class="fa fa-star estrela"></span>
+          <span class="fa fa-star estrela"></span>
+          <span class="fa fa-star estrela"></span>
+          <div id="chart-1">{{ output|safe }}</div>
 
+        </div>
+        <div style="font-size: 13px;color: red;" id='sem-avaliacao'>Sem avaliações</div>
+        <div id='button'>
+          <a class="myButton" onclick="verAvaliacoes()">Ver Avaliações</a>
+          <a class="myButton" onclick="showModal()">Avaliar Local</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; padding: 20px;">
+        <i class="fa fa-circle-o-notch rotate" id='inforotate' aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

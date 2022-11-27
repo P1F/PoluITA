@@ -468,10 +468,6 @@ h2 {
   font-weight: bold;
 }
 
-h3 {
-  color: #306844;
-}
-
 .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
   margin: 680px 10px 0 !important;
   z-index: 1;

@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.db.models import Avg
+import aqi
 import re
 import json
 from datetime import datetime, timezone
@@ -131,7 +132,6 @@ def buscar_empresa(request):
 def generate_avaliacao(request):
     data = dict(request.POST)
     comment = data['comentarios'][0]
-    grade = data['nota'][0]
     pm25 = data['pm25'][0]
     pm10 = data['pm10'][0]
     co = data['co'][0]
@@ -142,19 +142,6 @@ def generate_avaliacao(request):
     temperature = data['temperatura'][0]
     empresa_id = data['id-empresa'][0]
     erros = {}
-
-    if len(grade) == 0:
-        erros['nota'] = 'Inserir nota'
-        erros['ok'] = False
-        return JsonResponse(erros)
-    elif int(grade) > 10:
-        erros['nota'] = 'Nota deve estar entre 0 e 10'
-        erros['ok'] = False
-        return JsonResponse(erros)
-    elif int(grade) < 0:
-        erros['nota'] = 'Nota deve estar entre 0 e 10'
-        erros['ok'] = False
-        return JsonResponse(erros)
 
     if len(pm25) <= 0:
         erros['pm25'] = 'PM2.5 deve ser maior que 0'
@@ -201,19 +188,26 @@ def generate_avaliacao(request):
             user = request.session['username']
             userid = list(Usuários.objects.filter(user=user).values('id'))[0]['id']
             empresa = Empresas.objects.get(id=empresa_id)
-            Avaliações(comment=comment, grade=grade, pm25=pm25, pm10=pm10, co=co, co2=co2, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
-                empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
-            media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
-            empresa.grade = round(media['grade__avg'])
-            empresa.pm25 = pm25
-            empresa.pm10 = pm10
-            empresa.co = co
+            empresa.pm25 = aqi.to_aqi([
+    (aqi.POLLUTANT_PM25, pm25)])
+            empresa.pm10 = aqi.to_aqi([
+    (aqi.POLLUTANT_PM10, pm10)])
+            empresa.co = aqi.to_aqi([
+    (aqi.POLLUTANT_CO_8H, co)])
             empresa.co2 = co2
             empresa.lpg = lpg
             empresa.ch4 = ch4
             empresa.humidity = humidity
             empresa.temperature = temperature
             empresa.last_updated = datetime.now(timezone.utc)
+            empresa.grade = aqi.to_aqi([
+    (aqi.POLLUTANT_PM25, pm25),
+    (aqi.POLLUTANT_PM10, pm10),
+    (aqi.POLLUTANT_CO_8H, co)
+])
+            Avaliações(comment=comment, grade=empresa.grade, pm25=pm25, pm10=pm10, co=co, co2=co2, lpg=lpg, ch4=ch4, humidity=humidity, temperature=temperature,
+                empresa_id=empresa_id, user_id=userid, empresaname=empresa.name, username=user).save()
+            media = Avaliações.objects.filter(empresa_id=empresa_id).aggregate(Avg('grade'))
             empresa.save()
             erros['ok'] = True
         else:
@@ -228,10 +222,13 @@ def generate_avaliacao(request):
 def insert_rating(request):
     data = dict(request.POST)
     comment = data['comentarios'][0]
-    grade = data['nota'][0]
-    pm25 = data['pm25'][0]
-    pm10 = data['pm10'][0]
-    co = data['co'][0]
+    pm25_raw = data['pm25'][0]
+    pm10_raw = data['pm10'][0]
+    co_raw = data['co'][0]
+    pm25 = aqi.to_aqi([(aqi.POLLUTANT_PM25, pm25_raw)])
+    pm10 = aqi.to_aqi([(aqi.POLLUTANT_PM10, pm10_raw)])
+    co = aqi.to_aqi([(aqi.POLLUTANT_CO_8H, co_raw)])
+    grade = max(pm25, pm10, co)
     co2 = data['co2'][0]
     lpg = data['lpg'][0]
     ch4 = data['ch4'][0]
@@ -255,30 +252,17 @@ def insert_rating(request):
         erros['ok'] = False
         return JsonResponse(erros)
 
-    if len(grade) == 0:
-        erros['nota'] = 'Inserir nota'
-        erros['ok'] = False
-        return JsonResponse(erros)
-    elif int(grade) > 10:
-        erros['nota'] = 'Nota deve estar entre 0 e 10'
-        erros['ok'] = False
-        return JsonResponse(erros)
-    elif int(grade) < 0:
-        erros['nota'] = 'Nota deve estar entre 0 e 10'
-        erros['ok'] = False
-        return JsonResponse(erros)
-
-    if len(pm25) <= 0:
+    if len(repr(pm25)) <= 0:
         erros['pm25'] = 'PM2.5 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
 
-    if len(pm10) <= 0:
+    if len(repr(pm10)) <= 0:
         erros['pm10'] = 'PM10 deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
     
-    if len(co) <= 0:
+    if len(repr(co)) <= 0:
         erros['co'] = 'CO deve ser maior que 0'
         erros['ok'] = False
         return JsonResponse(erros)
