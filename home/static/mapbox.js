@@ -85,8 +85,7 @@ window.onload = function () {
           .setLngLat(marker.geometry.coordinates)
           .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
             .setHTML(`
-                <h2 id="mapa-nome">${marker.properties.title}</h3>
-                <h2 id="mapa-endereco">${marker.properties.description}</h3>
+                <h3 id="mapa-nome">${marker.properties.title}</h3>
                 ${
                   marker.properties.nota <= 50 ?
                     `<h3 id="mapa-endereco" style="color:green;">Qualidade do Ar: ${marker.properties.nota}</h3>` :
@@ -208,23 +207,6 @@ window.onload = function () {
         document.getElementById('info-endereço').textContent = 'Endereço: ' + data['address'].toString()
 
         document.getElementById('id-empresa').value = data['id']
-        var estrelas = document.getElementsByClassName('estrela')
-        document.getElementById('sem-avaliacao').classList.add('hide')
-
-        for (var i = 0; i < 5; i++) {
-          estrelas[i].classList.add('fa-star')
-          estrelas[i].classList.remove('fa-star-half')
-          if (i < Math.ceil(data['grade'] / 2))
-            estrelas[i].classList.add('checked')
-          else
-            estrelas[i].classList.remove('checked')
-        }
-        if (data['grade'] % 2 == 1 && data['grade'] != -1) {
-          estrelas[Math.floor(data['grade'] / 2)].classList.add('fa-star-half')
-          estrelas[Math.floor(data['grade'] / 2)].classList.remove('fa-star')
-        }
-        if (data['grade'] == -1)
-          document.getElementById('sem-avaliacao').classList.remove('hide')
 
         document.getElementById('info-hide-show').classList.remove("hide")
         document.getElementById('inforotate').style.display = 'none'
