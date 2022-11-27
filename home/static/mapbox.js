@@ -157,7 +157,7 @@ window.onload = function () {
                 <br>
                 <h5 id="popup-item">CH4 (ppm): </h5><h6>${marker.properties.ch4}</h6>
                 <br>
-                <h5 id="popup-item">Humidade: </h5><h6>${marker.properties.humidade}</h6>
+                <h5 id="popup-item">Umidade (%): </h5><h6>${marker.properties.humidade}</h6>
                 <br>
                 <h5 id="popup-item">Temperatura (°C): </h5><h6>${marker.properties.temperatura}</h6>
                 <br>
