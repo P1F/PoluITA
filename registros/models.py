@@ -28,6 +28,7 @@ class Usuários(models.Model):
     email =  models.CharField(max_length=64)
     password = models.CharField(max_length=64)
     user = models.CharField(max_length=64)
+    super = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}"

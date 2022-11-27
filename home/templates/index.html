@@ -50,7 +50,9 @@
         <div id='info-endereço'></div>
         <div id='button'>
           <a class="myButton" onclick="verAvaliacoes()">Ver Avaliações</a>
+          {% if request.session.isSuperUser %}
           <a class="myButton" onclick="showModal()">Avaliar Local</a>
+          {% endif %}
         </div>
       </div>
       <div style="display: flex; justify-content: center; padding: 20px;">

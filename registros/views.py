@@ -37,6 +37,7 @@ def registrar_usuario(request):
         email = data['email'][0]
         user = data['user-register'][0]
         senha = data['senha-register'][0]
+        isSuperUser = user == 'admin'
 
         if len(nome) == 0:
             erros['nome'] = 'Inserir nome'
@@ -61,8 +62,9 @@ def registrar_usuario(request):
             erros['ok'] = False
             return JsonResponse(erros)
         else:
-            Usuários(name=nome, email = email, password = senha, user = user).save()
+            Usuários(name=nome, email = email, password = senha, user = user, super = isSuperUser).save()
             request.session['username'] = user
+            request.session['isSuperUser'] = isSuperUser
             return JsonResponse({'ok': True, 'user':user})
     else:
         return JsonResponse({'erros':'metodo invalido'})
@@ -75,6 +77,7 @@ def entrar(request):
         senha = data['senha-login'][0]
 
         pw = Usuários.objects.filter(user=user).values('password')
+        isSuperUser = Usuários.objects.get(user=user).super
         
         if pw.count() == 0:
             erros['user-login'] = 'Usuario nao encontrado'
@@ -86,6 +89,7 @@ def entrar(request):
             return JsonResponse(erros)
         else:
             request.session['username'] = user
+            request.session['isSuperUser'] = isSuperUser
             return JsonResponse({'ok': True, 'user':user})
     else:
         return JsonResponse({'erros':'metodo invalido'})
