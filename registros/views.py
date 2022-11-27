@@ -77,7 +77,6 @@ def entrar(request):
         senha = data['senha-login'][0]
 
         pw = Usuários.objects.filter(user=user).values('password')
-        isSuperUser = Usuários.objects.get(user=user).super
         
         if pw.count() == 0:
             erros['user-login'] = 'Usuario nao encontrado'
@@ -88,6 +87,7 @@ def entrar(request):
             erros['ok'] = False
             return JsonResponse(erros)
         else:
+            isSuperUser = Usuários.objects.get(user=user).super
             request.session['username'] = user
             request.session['isSuperUser'] = isSuperUser
             return JsonResponse({'ok': True, 'user':user})
@@ -96,6 +96,7 @@ def entrar(request):
 
 def finalizar_sessao(request):
     request.session.pop('username', None)
+    request.session.pop('isSuperUser', None)
     return JsonResponse({'ok':True})
 
 def get_avaliacoes(request):
